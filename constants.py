@@ -35,3 +35,139 @@ LEVELS_DIVISIONS_ROMAN={
     2: 'II',
     3:'I'
 }
+SUMMONERS_TO_CHECK={
+    "IRON":
+        [
+            'ASSASSIN CREID',
+            'AIZai',
+            'kinaigeiros',
+            'Barninaxy',
+            'Keiosi',
+            'Weky18',
+            'xSalvatore',
+            'VENI',
+            'kociaraaa'
+        ],
+
+    "BRONZE":
+        [
+            'Krajowy Władek',
+            'AwSomE105'
+            'Kaeruto Felis',
+            'CHEIMAIRA',
+            'DavzZor1998',
+            'glmr',
+            'PotejtoJuice',
+            'FrostPP',
+            'igorast4',
+            'Knifeedgeee'
+        ],
+
+    "SILVER":
+        [
+            'Alivka',
+            'stenahoros',
+            'n00b4ever',
+            'alabamaba',
+            'First King ADC',
+            'Gudron',
+            'slavbek',
+            'IXSlaSherXI',
+            'NeVerTryVsMe',
+            'UberMenschen'
+        ],
+    "GOLD":
+        [
+            'pH Basic as you',
+            'Hriski4a153',
+            'vizipaci',
+            'čmoudi v paříži',
+            'Revy4',
+            'Bobus Builderus',
+            'Markiller25',
+            'GeeArcher',
+            'TSM GoSu',
+            'silnece'
+        ],
+    "PLATINUM":
+        [
+            'Gâffer',
+            'Minidom2',
+            'Andi1',
+            'Hélu',
+            'GreathKiller',
+            'NextT1me',
+            'kenjiro',
+            'Bend Your Spirit',
+            'WolskiNaViego',
+            'Fat Ban An'
+        ],
+    "EMERALD":
+        [
+            'SouL SinneR1',
+            'Ing Mates',
+            'P I R A T O S',
+            'Nie Gram Suppem',
+            'Avonerix',
+            'Ceafa de jaguar',
+            'blu428',
+            'Detarame Kidding',
+            'StrangeStereo',
+            'Crimson1919'
+        ],
+    "DIAMOND":
+        [
+            'KOBE B24',
+            'Malki2668',
+            'kisujv12',
+            '22minamanos22',
+            'NeCkOSBzuri8',
+            'robotBiceps',
+            'Anchor Smasher',
+            'Kreatywne Gibony',
+            'DeadlyCupcake',
+            'KLASHJNKOV'
+
+        ],
+    "MASTER":
+        [
+           'Petska',
+            'Deshet',
+            'CrazyPodes281',
+            'Comme Des Garcon',
+            'Tony Tony ChoÞer',
+            'csá jázmin',
+            'ArcherGOD',
+            'Kêl',
+            'Delise',
+            'Rivqooo',
+            'EkKuwait R 1'
+        ],
+    "GRANDMASTER":
+        [
+            'dekanyl',
+            'ArlenfZgA',
+            'Flash do przodu',
+            'Przy100 Pracy2k',
+            'Shakara',
+            'MICHELANGELO69',
+            'Bachev',
+            'Aegisus',
+            'avennn',
+            'MarQ'
+        ],
+    
+    "CHALLENGER":
+        [
+            'kinnamon',
+            'Hjustons',
+            'Ana Elmtarsham',
+            'Torpeda',
+            'pow3ridis',
+            'regate',
+            'Kecsketej07',
+            'Szkalownik Disa',
+            'Arnie Alligator',
+            'egw1999'
+        ]
+}

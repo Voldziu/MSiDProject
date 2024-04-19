@@ -4,6 +4,8 @@ import numpy as np
 from summoner import get_nickname,get_soloduo_level
 from constants import API_KEY
 import constants
+import graph
+import pickle
 
 
 
@@ -34,11 +36,22 @@ def get_match_by_id(match_id):
 
 
 def get_queue_id(match_id):
+    """
+
+    :param match_id:
+    :return:
+    """
     match = get_match_by_id(match_id)
     id = match['info']['queueId']
     return id
 
 def calculate_team_level(match_id ,queueID=420):
+    """
+    
+    :param match_id:
+    :param queueID:
+    :return:
+    """
     match =get_match_by_id(match_id)
     if (get_queue_id(match_id) == queueID):
         participants = match['metadata']['participants']  # 0-5 indecies blueside, 5: redside
@@ -89,8 +102,8 @@ def get_literal_match_level(match_level:int):
         roman_rank_level = rest // 100
 
 
-        main_rank_string_value=contants.LEVELS_DIVISIONS[main_rank_level]
-        roman_rank_string_value = contants.LEVELS_DIVISIONS_ROMAN[roman_rank_level]
+        main_rank_string_value=constants.LEVELS_DIVISIONS[main_rank_level]
+        roman_rank_string_value = constants.LEVELS_DIVISIONS_ROMAN[roman_rank_level]
         return f'{main_rank_string_value} {roman_rank_string_value}'
 
 
@@ -110,8 +123,62 @@ def get_match_info(match_timeline):
 def get_timeline_frames(match_info):
     return match_info['frames']
 
+def get_match_wanted_data(match_id):
+    match = get_match_by_id(match_id)
+    match_info = match['info']
+    time = match_info['gameDuration']
+    solokills = sum([participant["challenges"]["soloKills"] for participant in match_info['participants']])
+    kills = sum([participant["kills"] for participant in match_info['participants']])
+    kill_paricipation = np.mean([participant["challenges"]["killParticipation"] for participant in match_info['participants']])
+    deaths = sum([participant["deaths"] for participant in match_info['participants']])
+    assists=sum([participant["assists"] for participant in match_info['participants']])
+    cs_score = sum([participant["totalMinionsKilled"] for participant in match_info['participants']]) +sum([participant["totalAllyJungleMinionsKilled"] for participant in match_info['participants']]) + sum([participant["totalEnemyJungleMinionsKilled"] for participant in match_info['participants']])
+    cs_score_time = cs_score/time
+    kills_time = kills/time
+    deaths_time = deaths/time
+    assists_time =assists/time
+    solokills_time = solokills/time
+    team_gold = sum([participant["goldEarned"] for participant in match_info['participants']])
+    team_gold_time = team_gold/time
+
+    vision_score_time = np.mean([participant["challenges"]["visionScorePerMinute"] for participant in match_info['participants']])
+    wards_placed = sum([participant["wardsPlaced"] for participant in match_info['participants']])
+    wards_placed_time = wards_placed/time
+
+    return_dict={
+        "time":time,
+        "solokills_t":solokills_time,
+        "kills_t":kills_time,
+        "kp":kill_paricipation,
+        "deaths_t":deaths_time,
+        "assists_t":assists_time,
+        "csscore_t":cs_score_time,
+        "teamgold_t":team_gold_time,
+        "vision_score_t":vision_score_time,
+        "wards_placed_t":wards_placed_time,
+        "gold_graph_diffs_t":graph.get_sum_of_abs_diffs(match_id) / time
+
+    }
+    return return_dict
+
+
+
+def get_match_json(match_id):
+    lvl =calculate_match_level(match_id,420)
+    data={
+        "id": match_id,
+        "lvl": lvl,
+        "literal level": get_literal_match_level(lvl)
+    }
+    data.update(get_match_wanted_data(match_id))
+    return data
+
+
+
 
 
 if __name__=="__main__":
-    lvl = (calculate_match_level('EUN1_3576787586'))
-    print(get_literal_match_level(lvl))
+    #lvl = (calculate_match_level('EUN1_3576787586'))
+
+    print(get_match_json('EUN1_3576787586'))
+    #print(get_literal_match_level(lvl))
