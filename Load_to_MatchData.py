@@ -3,6 +3,7 @@ import os
 
 
 def create_folders():
+    os.makedirs("MatchData", exist_ok=True)
     os.chdir("MatchData/")
     folder_names = SUMMONERS_TO_CHECK.keys()
 

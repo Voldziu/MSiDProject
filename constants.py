@@ -52,7 +52,7 @@ SUMMONERS_TO_CHECK={
     "BRONZE":
         [
             'Krajowy Władek',
-            'AwSomE105'
+            'AwSomE105',
             'Kaeruto Felis',
             'CHEIMAIRA',
             'DavzZor1998',

@@ -1,6 +1,6 @@
 import requests
 import numpy as np
-
+import time
 from summoner import get_nickname,get_soloduo_level
 from constants import API_KEY
 import constants
@@ -19,7 +19,7 @@ def get_match_ids(puuid ,type ,n):
     :param n:  number of matches given, max 100
     :return: list of matches_id
     """
-    url =f'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?type={type}&start=0&count={n}&api_key={API_KEY}'
+    url =f'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?queue=420&type={type}&start=0&count={n}&api_key={API_KEY}'
     match_ids = requests.get(url).json()
     return match_ids
 
@@ -31,8 +31,9 @@ def get_match_by_id(match_id):
     :return: metadata of finished match
     """
     url = f'https://europe.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={API_KEY}'
-    response = requests.get(url).json()
-    return response
+    response = requests.get(url)
+    #print(response)
+    return response.json()
 
 
 def get_queue_id(match_id):
@@ -53,19 +54,24 @@ def calculate_team_level(match_id ,queueID=420):
     :return:
     """
     match =get_match_by_id(match_id)
+    print(match)
+    WAITING_INTERVAL=1
     if (get_queue_id(match_id) == queueID):
         participants = match['metadata']['participants']  # 0-5 indecies blueside, 5: redside
         blue_side_list_of_levels = []
         red_side_list_of_levels = []
 
         for puuid in participants[0:5]:
+            print(puuid)
             summoner_name = get_nickname(puuid)
-            solo_duo_level = get_soloduo_level(summoner_name)
+            solo_duo_level = get_soloduo_level(puuid)
+            time.sleep(WAITING_INTERVAL)
             blue_side_list_of_levels.append(solo_duo_level)
 
         for puuid in participants[5:]:
             summoner_name = get_nickname(puuid)
-            solo_duo_level = get_soloduo_level(summoner_name)
+            solo_duo_level = get_soloduo_level(puuid)
+            time.sleep(WAITING_INTERVAL)
             red_side_list_of_levels.append(solo_duo_level)
 
         blue_side_array = np.array(blue_side_list_of_levels).astype(float)
@@ -114,7 +120,9 @@ def get_literal_match_level(match_level:int):
 
 def get_match_timeline(matchid:str):
     url=f'https://europe.api.riotgames.com/lol/match/v5/matches/{matchid}/timeline?api_key={API_KEY}'
-    response = requests.get(url).json()
+    resp = requests.get(url)
+    print(f'mtach timeline:  {resp}')
+    response = resp.json()
     return response
 
 
@@ -127,6 +135,8 @@ def get_match_wanted_data(match_id):
     match = get_match_by_id(match_id)
     match_info = match['info']
     time = match_info['gameDuration']
+    if time<200:
+        return None
     solokills = sum([participant["challenges"]["soloKills"] for participant in match_info['participants']])
     kills = sum([participant["kills"] for participant in match_info['participants']])
     kill_paricipation = np.mean([participant["challenges"]["killParticipation"] for participant in match_info['participants']])
@@ -164,14 +174,20 @@ def get_match_wanted_data(match_id):
 
 
 def get_match_json(match_id):
-    lvl =calculate_match_level(match_id,420)
-    data={
-        "id": match_id,
-        "lvl": lvl,
-        "literal level": get_literal_match_level(lvl)
-    }
-    data.update(get_match_wanted_data(match_id))
-    return data
+    additional = get_match_wanted_data(match_id)
+    if (additional):
+        lvl =calculate_match_level(match_id,420)
+        data={
+            "id": match_id,
+            "lvl": lvl,
+            "literal level": get_literal_match_level(lvl)
+        }
+
+
+        data.update(additional)
+        return data
+    else:
+        return None
 
 
 
