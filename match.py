@@ -55,7 +55,7 @@ def calculate_team_level(match_id ,queueID=420):
     """
     match =get_match_by_id(match_id)
     print(match)
-    WAITING_INTERVAL=1
+    WAITING_INTERVAL=2
     if (get_queue_id(match_id) == queueID):
         participants = match['metadata']['participants']  # 0-5 indecies blueside, 5: redside
         blue_side_list_of_levels = []
@@ -63,13 +63,13 @@ def calculate_team_level(match_id ,queueID=420):
 
         for puuid in participants[0:5]:
             print(puuid)
-            summoner_name = get_nickname(puuid)
+            #summoner_name = get_nickname(puuid)
             solo_duo_level = get_soloduo_level(puuid)
             time.sleep(WAITING_INTERVAL)
             blue_side_list_of_levels.append(solo_duo_level)
 
         for puuid in participants[5:]:
-            summoner_name = get_nickname(puuid)
+            #summoner_name = get_nickname(puuid)
             solo_duo_level = get_soloduo_level(puuid)
             time.sleep(WAITING_INTERVAL)
             red_side_list_of_levels.append(solo_duo_level)

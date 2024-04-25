@@ -3,7 +3,7 @@ from constants import API_KEY,DIVISIONS_LEVELS,ROMAN_DIVISIONS_LEVELS
 
 
 def get_summoner_data(nickname):
-    url = f'https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{nickname}?api_key={API_KEY}'
+    url = f'https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{nickname}/EUNE?api_key={API_KEY}'
     response = requests.get(url)
 
     print(f'username:{nickname}summdata: {response}')
