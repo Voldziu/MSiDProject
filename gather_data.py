@@ -12,7 +12,7 @@ def process_summoners():
 
     summoners = constants.SUMMONERS_TO_CHECK
 
-    for rank in list(summoners.keys())[8:]:
+    for rank in list(summoners.keys()):
         for summonername in summoners[rank]:
             print(summonername)
             puuid = summoner.get_puuid(summonername)

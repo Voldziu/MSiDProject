@@ -162,7 +162,7 @@ SUMMONERS_TO_CHECK={
         [
             'kinnamon',
             'Hjustons',
-            'Ana Elmtarsham',
+            
             'Torpeda',
             'pow3ridis',
             'regate',
