@@ -11,6 +11,10 @@ Here, full raport of my work (in polish). [Raport.pdf](https://github.com/user-a
 TL;DR
 
 Best models predicts level within 1 division (1 up and 1 down) with 95% accuracy. Which is quite impressing based on simplicity of chosen features.
+
+
+
+
 <img width="444" alt="obraz" src="https://github.com/user-attachments/assets/50957398-c389-4e9a-93ca-d6889bf0b878" />
 
 
